@@ -10,7 +10,6 @@
 
 #import "RegisterViewController.h"
 
-//#import "MainPageViewController.h"
 
 #import "UserInfoModel.h"
 #import "infoArchive.h"
