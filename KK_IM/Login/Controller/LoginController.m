@@ -89,15 +89,10 @@
             NSLog(@"账号未注册！");
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"该账号未注册，你要注册该账号吗？" preferredStyle:UIAlertControllerStyleAlert];
             
-            
-            
-            
-            
             UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 //跳转至注册页面
                 
                 [self presentViewController:[RegisterViewController new] animated:YES completion:nil];
-                //[self performSegueWithIdentifier:@"register" sender:nil];
             }];
             [alertController addAction:okAction];
             
@@ -106,7 +101,6 @@
             [alertController addAction:cancelAction];
             
             [self presentViewController:alertController animated:YES completion:nil];
-            
         }
 }
 
@@ -115,24 +109,16 @@
     //成功匹配密码
     if([loginRes[@"result"] isEqual:@(YES) ]){
         NSLog(@"密码正确！");
-        
+        //进入主页面之前，获取个人信息并归档。
+        [conn getUserInfoForUserId:self.loginView.usernameField.text finishBlock:^(NSDictionary * _Nonnull userInfo) {
+            //下面是进行归档
+            infoArchive* archiver = [infoArchive new];
+            [archiver archiveMyInfo:userInfo];
+            
         MainTabBarController* mainTabBarController = [[MainTabBarController alloc]init];
         AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
         [appDelegate.navigationController pushViewController:mainTabBarController animated:YES];
-        
-        //进入主页面之前，获取个人信息并归档。
-//        [conn changURL:@"https://qczgqv.fn.thelarkcloud.com/getUserInfo"];
-        [conn getUserInfoForUserId:self.loginView.usernameField.text finishBlock:^(NSDictionary * _Nonnull userInfo) {
-            //下面是进行归档
-
-            infoArchive* archiver = [infoArchive new];
-
-            [archiver archiveMyInfo:userInfo];
-            
         }];
-        
-        /*  TODO： 归档个人用户信息的数据  */
-        //[self performSegueWithIdentifier:@"loginSegue" sender:nil];
     }else{
         //不匹配
         NSLog(@"账号密码不匹配！");

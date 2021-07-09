@@ -31,12 +31,6 @@
     return _manager;
 }
 
-//-(instancetype) initWithUrl:(NSString*)url {
-//    if(self = [super init]){
-//        self.url = url;
-//    }
-//    return self;
-//}
 
 -(void) sendBody:(NSDictionary*)body finishBlock:( void (^) (NSDictionary*))finish{
     //异步请求
@@ -88,8 +82,6 @@
     [self sendBody:body finishBlock:finish];
     
 }
-
-
 
 @end
 
